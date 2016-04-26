@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
@@ -65,6 +66,13 @@ class FileTreeModel implements TreeModel {
 
 	public void setRoot(File f) {
 		root = new FileWrap(f);
+		
+		Object[] opath = new Object[1]; 
+		opath[0] = root;
+		TreeModelEvent e = new TreeModelEvent(this, opath);
+		for (TreeModelListener tml : listeners) {
+			tml.treeStructureChanged(e);
+		}
 	}
 
 	public boolean isLeaf(Object node) {
@@ -73,6 +81,4 @@ class FileTreeModel implements TreeModel {
 
 	public void valueForPathChanged(TreePath path, Object newValue) {
 	}
-
-	
 }

@@ -6,7 +6,6 @@ import java.io.File;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
 
@@ -29,6 +28,7 @@ public class TreeTest implements ActionListener {
 
 		File[] drives = File.listRoots();
 		box = new JComboBox<>(drives);
+		box.addActionListener(this);
 
 		ftm = new FileTreeModel(box.getItemAt(0));
 
@@ -36,7 +36,7 @@ public class TreeTest implements ActionListener {
 		ToolTipManager.sharedInstance().registerComponent(tree);
 		tree.setCellRenderer(new FileTreeRenderer());
 		JScrollPane scrollPane = new JScrollPane(tree);
-
+		
 		f.add(box, BorderLayout.NORTH);
 		f.add(scrollPane, BorderLayout.CENTER);
 		f.setDefaultCloseOperation(f.EXIT_ON_CLOSE);
