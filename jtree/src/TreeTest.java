@@ -27,7 +27,7 @@ public class TreeTest implements ActionListener {
 		JFrame f = new JFrame("JTree Example");
 
 		File[] drives = File.listRoots();
-		box = new JComboBox<>(drives);
+		box = new JComboBox<File>(drives);
 		box.addActionListener(this);
 
 		ftm = new FileTreeModel(box.getItemAt(0));
