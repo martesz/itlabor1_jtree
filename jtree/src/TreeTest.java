@@ -13,8 +13,11 @@ import javax.swing.ToolTipManager;
 public class TreeTest implements ActionListener {
 	JTextField tf;
 	FileTreeModel btm;
+	JComboBox<File> box;
 
 	public void actionPerformed(ActionEvent ae) {
+		int selected = box.getSelectedIndex();
+		btm.setRoot(box.getItemAt(selected));
 		double d = Double.parseDouble(tf.getText());
 		btm.insert(d);
 		tf.setText("");
@@ -28,10 +31,10 @@ public class TreeTest implements ActionListener {
 		JFrame f = new JFrame("JTree Example");
 		tf = new JTextField("", 20);
 
-		btm = new FileTreeModel();
-
 		File[] drives = File.listRoots();
-		JComboBox<File> box = new JComboBox<>(drives);
+		box = new JComboBox<>(drives);
+
+		btm = new FileTreeModel(box.getItemAt(0));
 		
 		JTree tree = new JTree(btm);
 		ToolTipManager.sharedInstance().registerComponent(tree);

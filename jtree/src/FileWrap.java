@@ -10,6 +10,18 @@ import java.nio.file.Path;
 public class FileWrap {
 	File value;
 
+	public File getValue() {
+		return value;
+	}
+
+	public void setValue(File value) {
+		this.value = value;
+	}
+
+	public FileWrap(File file) {
+		value = file;
+	}
+
 	@Override
 	public String toString() {
 		return value.getName();

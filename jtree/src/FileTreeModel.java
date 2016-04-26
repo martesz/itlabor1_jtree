@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.event.TreeModelEvent;
@@ -7,11 +8,11 @@ import javax.swing.tree.TreePath;
 
 class FileTreeModel implements TreeModel {
 	ArrayList<TreeModelListener> listeners;
-	BinTree root;
+	FileWrap root;
 
-	public FileTreeModel() {
+	public FileTreeModel(File file) {
 		listeners = new ArrayList<TreeModelListener>();
-		root = new BinTree();
+		root = new FileWrap(file);
 	}
 
 	public void addTreeModelListener(TreeModelListener l) {
@@ -23,45 +24,52 @@ class FileTreeModel implements TreeModel {
 	}
 
 	public Object getChild(Object parent, int index) {
-		BinTree bt = (BinTree) parent;
-		if (bt == null)
+		FileWrap fw = (FileWrap) parent;
+		if (fw == null) {
 			return null;
-		switch (index) {
-		case 0:
-			return bt.left;
-		case 1:
-			return bt.right;
 		}
-		return null;
+		String[] members = fw.list();
+		return new File(fw.getValue(), members[index]);
 	}
 
 	public int getChildCount(Object parent) {
-		BinTree bt = (BinTree) parent;
-		if (bt == null)
+		FileWrap fw = (FileWrap) parent;
+		if (fw == null)
 			return 0;
 
-		return (bt.isNull()) ? 0 : 2;
+		if (fw.isDirectory()) {
+			return fw.list().length;
+		} else {
+			return 0;
+		}
 	}
 
 	public int getIndexOfChild(Object parent, Object child) {
-		BinTree bt = (BinTree) parent;
+		FileWrap dir = (FileWrap) parent;
+		FileWrap file = (FileWrap) child;
+		String[] members = dir.list();
 		int n = -1;
-		if (bt == null)
-			return n;
-		if (bt.left == child)
-			n = 0;
-		if (bt.right == child)
-			n = 1;
+
+		for (int i = 0; i < members.length; i++) {
+			if (file.getName().equals(members[i])) {
+				return i;
+			}
+		}
+
 		return n;
+
 	}
 
 	public Object getRoot() {
 		return root;
 	}
 
+	public void setRoot(File f) {
+		root = new FileWrap(f);
+	}
+
 	public boolean isLeaf(Object node) {
-		BinTree bt = (BinTree) node;
-		return (bt != null && bt.isNull());
+		return ((FileWrap) node).isFile();
 	}
 
 	public void valueForPathChanged(TreePath path, Object newValue) {
