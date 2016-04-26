@@ -11,16 +11,13 @@ import javax.swing.JTree;
 import javax.swing.ToolTipManager;
 
 public class TreeTest implements ActionListener {
-	JTextField tf;
-	FileTreeModel btm;
+
+	FileTreeModel ftm;
 	JComboBox<File> box;
 
 	public void actionPerformed(ActionEvent ae) {
 		int selected = box.getSelectedIndex();
-		btm.setRoot(box.getItemAt(selected));
-		double d = Double.parseDouble(tf.getText());
-		btm.insert(d);
-		tf.setText("");
+		ftm.setRoot(box.getItemAt(selected));
 	}
 
 	static public void main(String args[]) {
@@ -29,20 +26,18 @@ public class TreeTest implements ActionListener {
 
 	public void run() {
 		JFrame f = new JFrame("JTree Example");
-		tf = new JTextField("", 20);
 
 		File[] drives = File.listRoots();
 		box = new JComboBox<>(drives);
 
-		btm = new FileTreeModel(box.getItemAt(0));
-		
-		JTree tree = new JTree(btm);
+		ftm = new FileTreeModel(box.getItemAt(0));
+
+		JTree tree = new JTree(ftm);
 		ToolTipManager.sharedInstance().registerComponent(tree);
 		tree.setCellRenderer(new FileTreeRenderer());
 		JScrollPane scrollPane = new JScrollPane(tree);
-		tf.addActionListener(this);
+
 		f.add(box, BorderLayout.NORTH);
-		f.add(tf, BorderLayout.SOUTH);
 		f.add(scrollPane, BorderLayout.CENTER);
 		f.setDefaultCloseOperation(f.EXIT_ON_CLOSE);
 		f.pack();
