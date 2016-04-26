@@ -28,7 +28,7 @@ class FileTreeModel implements TreeModel {
 			return null;
 		}
 		String[] members = fw.list();
-		return new File(fw.getValue(), members[index]);
+		return new FileWrap(new File(fw.getValue(), members[index]));
 	}
 
 	public int getChildCount(Object parent) {

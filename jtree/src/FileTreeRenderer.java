@@ -18,8 +18,8 @@ class FileTreeRenderer extends DefaultTreeCellRenderer {
                         tree, value, sel,
                         expanded, leaf, row,
                         hasFocus);
-	BinTree bt = (BinTree)value;
-	setToolTipText("("+bt.getDepth()+")");
+	FileWrap fw = (FileWrap)value;
+	setToolTipText("("+fw.length()+")");
         return this;
     }
 }
