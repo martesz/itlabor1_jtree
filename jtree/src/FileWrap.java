@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Path;
+import java.util.Arrays;
 
 public class FileWrap {
 	File value;
@@ -136,7 +137,9 @@ public class FileWrap {
 	}
 
 	public String[] list() {
-		return value.list();
+		String[] result = value.list();
+	    Arrays.sort(result);
+		return result;
 	}
 
 	public String[] list(FilenameFilter filter) {
@@ -144,7 +147,10 @@ public class FileWrap {
 	}
 
 	public File[] listFiles() {
-		return value.listFiles();
+		File[] result = value.listFiles();
+	    Arrays.sort(result);
+		return result;
+		
 	}
 
 	public File[] listFiles(FileFilter filter) {
