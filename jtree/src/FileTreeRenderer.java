@@ -1,11 +1,9 @@
-import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.tree.*;
+import java.awt.Component;
 
-class BinTreeRenderer extends DefaultTreeCellRenderer {
+import javax.swing.JTree;
+import javax.swing.tree.DefaultTreeCellRenderer;
+
+class FileTreeRenderer extends DefaultTreeCellRenderer {
 
     public Component getTreeCellRendererComponent(
                         JTree tree,
