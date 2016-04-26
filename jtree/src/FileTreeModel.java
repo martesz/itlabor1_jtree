@@ -66,10 +66,9 @@ class FileTreeModel implements TreeModel {
 
 	public void setRoot(File f) {
 		root = new FileWrap(f);
-		
-		Object[] opath = new Object[1]; 
-		opath[0] = root;
-		TreeModelEvent e = new TreeModelEvent(this, opath);
+	
+		TreePath tp = new TreePath(root);
+		TreeModelEvent e = new TreeModelEvent(this, tp);
 		for (TreeModelListener tml : listeners) {
 			tml.treeStructureChanged(e);
 		}
